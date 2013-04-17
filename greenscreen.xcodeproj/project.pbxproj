@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF2107C3171E70C300C0DA7D /* PDCBackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2107C2171E70C300C0DA7D /* PDCBackgroundImageView.m */; };
 		CF61C15F16B9C57100844A60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF61C15E16B9C57100844A60 /* UIKit.framework */; };
 		CF61C16116B9C57100844A60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF61C16016B9C57100844A60 /* Foundation.framework */; };
 		CF61C16316B9C57100844A60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF61C16216B9C57100844A60 /* CoreGraphics.framework */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF2107C1171E70C300C0DA7D /* PDCBackgroundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDCBackgroundImageView.h; sourceTree = "<group>"; };
+		CF2107C2171E70C300C0DA7D /* PDCBackgroundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDCBackgroundImageView.m; sourceTree = "<group>"; };
 		CF61C15A16B9C57100844A60 /* greenscreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = greenscreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61C15E16B9C57100844A60 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CF61C16016B9C57100844A60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -97,6 +100,8 @@
 				CF61C18116B9C8E300844A60 /* GreenScreen */,
 				CF61C16D16B9C57100844A60 /* PDCAppDelegate.h */,
 				CF61C16E16B9C57100844A60 /* PDCAppDelegate.m */,
+				CF2107C1171E70C300C0DA7D /* PDCBackgroundImageView.h */,
+				CF2107C2171E70C300C0DA7D /* PDCBackgroundImageView.m */,
 				CF61C17616B9C57200844A60 /* MainStoryboard.storyboard */,
 				CF61C17916B9C57200844A60 /* PDCViewController.h */,
 				CF61C17A16B9C57200844A60 /* PDCViewController.m */,
@@ -199,6 +204,7 @@
 				CF61C16F16B9C57100844A60 /* PDCAppDelegate.m in Sources */,
 				CF61C17B16B9C57200844A60 /* PDCViewController.m in Sources */,
 				CF61C18416B9C8F800844A60 /* PDCGreenScreener.m in Sources */,
+				CF2107C3171E70C300C0DA7D /* PDCBackgroundImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +321,7 @@
 				CF61C18016B9C57200844A60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

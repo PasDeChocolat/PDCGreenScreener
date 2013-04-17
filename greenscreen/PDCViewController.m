@@ -39,6 +39,7 @@
     
     [self.hueRangeSlider setEnabled:NO];
     [self.hueCenterSlider setEnabled:NO];
+    [self.backgroundImageView resetBackground];
 }
 
 - (void)didReceiveMemoryWarning

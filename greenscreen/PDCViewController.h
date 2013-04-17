@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PDCGreenScreener.h"
+#import "PDCBackgroundImageView.h"
 
 @interface PDCViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet PDCBackgroundImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UISlider *hueCenterSlider;
 @property (weak, nonatomic) IBOutlet UISlider *hueRangeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *hueCenterLabel;
