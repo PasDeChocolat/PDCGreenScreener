@@ -8,6 +8,11 @@
 
 #import "PDCBackgroundImageView.h"
 
+@interface PDCBackgroundImageView ()
++ (CIFilter *)checkerboardFilterForSize:(CGSize)size;
++ (CIFilter *)cropFilterForSize:(CGSize)size scale:(CGFloat)scale inputImage:(CIImage *)inputImage;
++ (UIImage *)uiimageFromCIImage:(CIImage *)ciimage scale:(CGFloat)scale context:(CIContext *)context;
+@end
 
 @implementation PDCBackgroundImageView
 
@@ -20,23 +25,48 @@
     return self;
 }
 
-- (void)resetBackground
++ (CIFilter *)checkerboardFilterForSize:(CGSize)size
 {
-    // Context:
-    CIContext *ctx = [CIContext contextWithOptions:nil];
-    
+    NSNumber *twoSquareWidth = @(8);
+    return [CIFilter filterWithName:@"CICheckerboardGenerator"
+                      keysAndValues:
+            @"inputColor0", [CIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f],
+            @"inputColor1", [CIColor colorWithRed:0.8f green:0.8f blue:0.8f alpha:1.0f],
+            @"inputWidth", twoSquareWidth,
+            @"inputCenter", [CIVector vectorWithX:size.width/2.0f Y:size.height/2.0f],
+            nil];
+}
+
++ (CIFilter *)cropFilterForSize:(CGSize)size scale:(CGFloat)scale inputImage:(CIImage *)inputImage
+{
+    CGRect cropRect = CGRectZero;
+    cropRect.size = size;
+    cropRect.size.width  *= scale;
+    cropRect.size.height *= scale;
+    return [CIFilter filterWithName:@"CICrop"
+                      keysAndValues:
+            @"inputImage", inputImage,
+            @"inputRectangle", [CIVector vectorWithCGRect:cropRect],
+            nil];
+}
+
++ (UIImage *)uiimageFromCIImage:(CIImage *)ciimage scale:(CGFloat)scale context:(CIContext *)context
+{
+    CGImageRef cgimg = [context createCGImage:ciimage
+                                     fromRect:[ciimage extent]];
+    return [[UIImage alloc] initWithCGImage:cgimg
+                                      scale:scale
+                                orientation:UIImageOrientationUp];
+}
+
+- (void)resetBackground
+{    
     // Get width of image view:
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGSize size = CGSizeMake(width, width);
     
     // Set up checkerboard:
-    NSNumber *twoSquareWidth = @(8);
-    CIFilter *checkerFilter = [CIFilter filterWithName:@"CICheckerboardGenerator"
-                                         keysAndValues:
-                               @"inputColor0", [CIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f],
-                               @"inputColor1", [CIColor colorWithRed:0.8f green:0.8f blue:0.8f alpha:1.0f],
-                               @"inputWidth", twoSquareWidth,
-                               @"inputCenter", [CIVector vectorWithX:width/2.0f Y:width/2.0f],
-                               nil];
+    CIFilter *checkerFilter = [self.class checkerboardFilterForSize:size];
     CIImage *checkCIImage = [checkerFilter valueForKey:kCIOutputImageKey];
     
     // Scale:
@@ -46,23 +76,17 @@
     }
     
     // Crop:
-    CGRect cropRect = CGRectZero;
-    cropRect.size = CGSizeMake(width, width);
-    cropRect.size.width  *= scale;
-    cropRect.size.height *= scale;
-    CIFilter *cropFilter = [CIFilter filterWithName:@"CICrop"
-                                      keysAndValues:
-                            @"inputImage", checkCIImage,
-                            @"inputRectangle", [CIVector vectorWithCGRect:cropRect],
-                            nil];
+    CIFilter *cropFilter = [self.class cropFilterForSize:size
+                                                   scale:scale
+                                              inputImage:checkCIImage];
+    
+    // Context:
+    CIContext *context = [CIContext contextWithOptions:nil];
     
     // Convert background image:
-    CIImage *ciimage = cropFilter.outputImage;
-    CGImageRef cgimg = [ctx createCGImage:ciimage
-                                 fromRect:[ciimage extent]];
-    self.image = [[UIImage alloc] initWithCGImage:cgimg
-                                            scale:scale
-                                      orientation:UIImageOrientationUp];
+    self.image = [self.class uiimageFromCIImage:cropFilter.outputImage
+                                          scale:scale
+                                        context:context];
 }
 
 @end
