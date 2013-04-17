@@ -21,6 +21,7 @@
 @property (nonatomic, strong) PDCGreenScreener *greenScreener;
 @property (nonatomic, strong) UIImage *originalImage;
 @property (weak, nonatomic) IBOutlet UIView *hueView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *hueUpdateSpinner;
 
 - (IBAction)imageTapped:(id)sender;
 - (IBAction)handleSelectPhotoPressed:(UIButton *)sender;

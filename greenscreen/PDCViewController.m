@@ -36,6 +36,9 @@
     self.greenScreener.hueCenterDegrees = self.hueCenterSlider.value;
     self.greenScreener.hueRangeDegrees  = self.hueRangeSlider.value;
     [self updateHueViewColor];
+    
+    [self.hueRangeSlider setEnabled:NO];
+    [self.hueCenterSlider setEnabled:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,6 +98,8 @@
         [self updateImage];
     }
     
+    [self.hueRangeSlider setEnabled:YES];
+    [self.hueCenterSlider setEnabled:YES];
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -114,6 +119,7 @@
     
     [self.view bringSubviewToFront:self.imageView];
     self.selectPhotoButton.alpha = 0.0f;
+    [self.hueUpdateSpinner stopAnimating];
 }
 
 - (void)cancelUpdateImage
@@ -136,6 +142,7 @@
 }
 
 - (IBAction)hueCenterValueChanged:(UISlider *)sender {
+    [self.hueUpdateSpinner startAnimating];
     self.greenScreener.hueCenterDegrees = sender.value;
     self.hueCenterLabel.text = [self.class formattedFloatDegrees:self.greenScreener.hueCenterDegrees];
     [self updateHueViewColor];
@@ -145,6 +152,7 @@
 }
 
 - (IBAction)hueRangeValueChanged:(UISlider *)sender {
+    [self.hueUpdateSpinner startAnimating];
     self.greenScreener.hueRangeDegrees = sender.value;
     self.hueRangeLabel.text = [self.class formattedFloatDegrees:self.greenScreener.hueRangeDegrees];
 
